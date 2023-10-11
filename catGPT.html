@@ -1,0 +1,232 @@
+
+<html>
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>C atGPT</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Initial Settings */
+        body {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+            
+            /* Text Selection */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        body::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera*/
+        }
+        div {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+        div::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera*/
+        }
+
+        /* Main Structures */
+        body {
+            margin: 0;
+        }
+        #sidePage {
+            background-color: #222325;
+            display: block;
+            margin-left: 0px;
+            width: 300px;
+            min-height: 100%;
+        }
+        #chatPage {
+            background-color: white;
+        }
+
+        /* inside sidePage */
+        #newChatButtonContainer {
+            min-height: 5%;
+            min-width: 100%;
+            
+            display: flex;
+            flex-direction: row;
+            align-content: space-evenly;
+            gap: 0.5em;
+            padding: 0.8em;
+        }
+        #newChatButton {
+            text-align: left;
+            width: 75%;
+        }
+        #closeSideBarButton {
+            margin: auto;
+            max-width: 3%;
+            background-color: #0000;
+        }
+
+        #logContainer {
+            height: 100%;
+            background-color: #0000;
+            padding: 2%;
+
+            font-size: small;
+        }
+        .wrapper {
+            position: absolute;
+            height: 2em;
+            width: 265px;
+            align-self: stretch;
+            background-image: linear-gradient(90deg, rgba(0,0,0,0) 70%, #222325);
+            z-index: 1;
+        }
+        .logDate {
+            color: #888;
+            margin-left: 3%;
+            margin-top: 6%;
+            margin-bottom: 3%;
+        }
+        .log {
+            z-index: 0;
+            border-radius: 4px;
+            max-height: 4%;
+            padding: 1.0em;
+            margin: 1%;
+
+            color: #eee;
+            font-size: 1.1em;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .log.selected{
+            background-color: #323335;
+        }
+        .log.selected > .wrapper {
+            background-image: linear-gradient(90deg, rgba(0,0,0,0) 70%, #323335);
+        }
+
+        .log:hover {
+            background-color: #323335;
+        }
+        .log:hover > .wrapper {
+            background-image: linear-gradient(90deg, rgba(0,0,0,0) 70%, #323335);
+        }
+
+                
+        /* meta */
+        button {
+            background-color: #0000;
+            border: #888 1px solid;
+            border-radius: 6px;
+
+            height: 5.5%;
+            color: white;
+
+            padding: 5.2%;            
+        }
+        i {
+            margin-right: 6%;
+        }
+        
+        /* MOBILE SCREEN */
+        @media(max-width: 600px) {
+            #sidePage {
+                margin-left: -300px;
+                width: 300px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        // @ts-check
+
+        window.onload = main;
+        function main(){
+
+            addLog('Why do cats hate dogs?', 'Yesterday');
+            addLog('한글 테스트', 'Yesterday')
+            addLog('Long texts should be hidden by the dissolve effect.')
+            addLog('Why cats are cute?');
+            addLog('Nyan Nyan Nyan Nyan Nyan Nyan Nyan ')
+            
+            let selected = document.getElementsByClassName('log')[0];
+            selected.classList.add('selected');
+        }
+
+        /**
+         * create and add log element after {where}. return Success or failure
+         * @param {String} topic - topic text
+         * @param {String} where - id of logDate (destination)
+         * @return {boolean}
+         */
+        function addLog(topic, where="Today"){
+            
+            // Create container
+            let newContainer = makeWithClass('div', 'log');
+
+            // Add a wrapper for text dissolve effect.
+            newContainer.appendChild(
+                makeWithClass('div', 'wrapper')
+                );
+            
+            // Temporary - Add random id
+            newContainer.id = Math.random().toString(36).substr(2, 16);
+
+            // Add a cat icon
+            let icon = makeWithClass('i', 'fas fa-cat');
+            icon.style.color = '#eee';
+            newContainer.appendChild(icon);
+
+            // Add the topic text
+            newContainer.innerHTML += topic;
+
+            // Append to destination
+            let destination = document.getElementById(where);
+            if (destination==null) {
+                console.error(`There's no ${where}!`);
+                return false; }
+            
+            // if no problem
+            destination.after(newContainer);
+            return true;
+        }
+
+        /**
+         * @param {String} className
+         */
+        function makeWithClass(element, className) {
+            let div = document.createElement(element);
+            div.className = className;
+            return div
+        }
+    </script>
+
+    <div id="sidePage">
+        <div id="newChatButtonContainer">
+            <button id="newChatButton">
+                <i class="fas fa-plus" style="color: #ffffff;"></i>
+                New Cat
+            </button>
+            <button id="CloseSidePageButton">
+                <i class="fas fa-list" style="color: #ffffff;"></i>
+            </button>
+        </div>
+
+        <div id="logContainer">
+            <div class="logDate" id="Today">Today</div>
+            
+            <div class="logDate" id="Yesterday">Yesterday</div>
+        </div>
+        
+    </div>
+    <div id="chatPage">
+        
+    </div>
+</body>
