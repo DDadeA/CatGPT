@@ -34,6 +34,9 @@
         /* Main Structures */
         body {
             margin: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
         }
         #sidePage {
             background-color: #222325;
@@ -44,6 +47,16 @@
         }
         #chatPage {
             background-color: white;
+            width: 100%;
+            display: block;
+            justify-content: center;
+        }
+        #initialPage {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
         }
 
         /* inside sidePage */
@@ -59,6 +72,7 @@
         }
         #newChatButton {
             text-align: left;
+            font-size: 0.9em;
             width: 75%;
         }
         #closeSideBarButton {
@@ -117,7 +131,114 @@
             background-image: linear-gradient(90deg, rgba(0,0,0,0) 70%, #323335);
         }
 
-                
+        /* Chat */
+
+        /** Initial Page **/
+        #gptSelectButtonContainer {
+            width: 30%;
+            max-height: 4%;
+            
+            margin: auto;    
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 10px;
+            background-color: #dedede;
+            
+            margin-top: 5%;
+            margin-bottom: 10%;
+            padding: 0.7%;
+        }
+        #gptSelectButtonContainer > label {
+            width: 49%;
+            min-height: 96%;
+            max-height: 96%;
+            
+            padding: 0;
+            margin: 0;
+
+            background-color: #0000;
+            display: flex;
+            flex-wrap: nowrap;
+        }
+        #gptSelectButtonContainer > label > input {
+            visibility: collapse; }
+
+        #gptSelectButtonContainer > label > div {
+            width: 100%;
+            border-radius: 10px;
+
+            display: flex;
+            
+            align-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 0;
+            justify-content: center;
+
+            transition: .1s linear;
+            background-color: #0000;
+        }
+        #gptSelectButtonContainer > label:hover > div {
+            transition: .1s linear;
+            background-color: #fff5;
+        }
+        #gptSelectButtonContainer > label > input:checked + div {
+            transition: .1s linear;
+            background-color: #ffffff;
+        }
+
+        /* GPTSelectButton > Icon */
+        #gptSelectButtonContainer > label > div > i{
+            transition: .1s linear;
+            color: #999;
+            font-size: medium;
+        }
+        #gptSelectButtonContainer > label > input:checked + div > i {
+            transition: .1s linear;
+            color: #31e74c;
+        }
+        
+        #gptSelectButtonContainer > label > div > P {
+            font-size: small;
+        }
+        
+        #CatGPT {
+         width: 100%;
+         text-align: center;
+         font-size: 2.5em;
+         font-weight: bolder;
+         color: #dcdddd;
+
+         z-index: 5;
+        }
+        
+        #questionInput {
+            /* Remove default css */
+            outline: none;
+
+            border: #ccca 1px solid;
+            box-shadow: #8882 0 0 15px;
+
+            margin: auto;
+            margin-bottom: 4%;
+            width: 70%;
+            height: 6%;
+
+            padding: 2%;
+            border-radius: 10px;
+            
+            color: #666;
+            font-weight:normal;
+            font-size: 1em;
+
+            justify-content: center;
+        }
+        #questionInput:focus {
+            box-shadow: #0002 0 0 20px;
+        }
+        
         /* meta */
         button {
             background-color: #0000;
@@ -227,6 +348,27 @@
         
     </div>
     <div id="chatPage">
+        <div id="initialPage">
+            <div id="gptSelectButtonContainer">
+                <label for="3_5">
+                    <input id='3_5' type="radio" name="GPT">
+                    <div id='gpt3_5ButtonContainer'>
+                        <i class="fas fa-bolt"></i>
+                        <p>GPT-3.5</p>
+                    </div>
+                </label>
+                <label for="4_0">
+                    <input id='4_0' type="radio" name="GPT">
+                    <div id='gpt4_0ButtonContainer'>
+                        <i class="fas fa-fish"></i>
+                        <p>GPT-4</p>
+                    </div>
+                </label>
+            </div>
+            <div id="CatGPT">CatGPT</div>
+            
+            <input type="text" id="questionInput" placeholder="Send a message">
+        </div>
         
     </div>
 </body>
