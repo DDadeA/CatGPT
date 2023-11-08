@@ -2,333 +2,26 @@
 <html>
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- REMOVE CACHE -->
+    <meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT" />
+    <meta http-equiv="Expires" content="-1" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
 
-    <title>C atGPT</title>
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        /* Initial Settings */
-        body {
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
-            
-            /* Text Selection */
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        body::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera*/
-        }
-        div {
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
-        }
-        div::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera*/
-        }
+    <link rel="stylesheet" href="./style.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        /* Main Structures */
-        body {
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-        }
-        #sidePage {
-            background-color: #222325;
-            display: block;
-            margin-left: 0px;
-            width: 300px;
-            min-height: 100%;
-        }
-        #chatPage {
-            background-color: white;
-            width: 100%;
-            display: block;
-            justify-content: center;
-        }
-        #initialPage {
-            height: 100%;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: start;
-        }
-
-        /* inside sidePage */
-        #newChatButtonContainer {
-            min-height: 5%;
-            min-width: 100%;
-            
-            display: flex;
-            flex-direction: row;
-            align-content: space-evenly;
-            gap: 0.5em;
-            padding: 0.8em;
-        }
-        #newChatButton {
-            text-align: left;
-            font-size: 0.9em;
-            width: 75%;
-        }
-        #closeSideBarButton {
-            margin: auto;
-            max-width: 3%;
-            background-color: #0000;
-        }
-
-        #logContainer {
-            height: 100%;
-            background-color: #0000;
-            padding: 2%;
-
-            font-size: small;
-        }
-        .wrapper {
-            position: absolute;
-            height: 2em;
-            width: 265px;
-            align-self: stretch;
-            background-image: linear-gradient(90deg, rgba(0,0,0,0) 70%, #222325);
-            z-index: 1;
-        }
-        .logDate {
-            color: #888;
-            margin-left: 3%;
-            margin-top: 6%;
-            margin-bottom: 3%;
-        }
-        .log {
-            z-index: 0;
-            border-radius: 4px;
-            max-height: 4%;
-            padding: 1.0em;
-            margin: 1%;
-
-            color: #eee;
-            font-size: 1.1em;
-
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .log.selected{
-            background-color: #323335;
-        }
-        .log.selected > .wrapper {
-            background-image: linear-gradient(90deg, rgba(0,0,0,0) 70%, #323335);
-        }
-
-        .log:hover {
-            background-color: #323335;
-        }
-        .log:hover > .wrapper {
-            background-image: linear-gradient(90deg, rgba(0,0,0,0) 70%, #323335);
-        }
-
-        /* Chat */
-
-        /** Initial Page **/
-        #gptSelectButtonContainer {
-            width: 30%;
-            max-height: 4%;
-            
-            margin: auto;    
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-radius: 10px;
-            background-color: #dedede;
-            
-            margin-top: 5%;
-            margin-bottom: 10%;
-            padding: 0.7%;
-        }
-        #gptSelectButtonContainer > label {
-            width: 49%;
-            min-height: 96%;
-            max-height: 96%;
-            
-            padding: 0;
-            margin: 0;
-
-            background-color: #0000;
-            display: flex;
-            flex-wrap: nowrap;
-        }
-        #gptSelectButtonContainer > label > input {
-            visibility: collapse; }
-
-        #gptSelectButtonContainer > label > div {
-            width: 100%;
-            border-radius: 10px;
-
-            display: flex;
-            
-            align-content: center;
-            align-items: center;
-            flex-wrap: nowrap;
-            gap: 0;
-            justify-content: center;
-
-            transition: .1s linear;
-            background-color: #0000;
-        }
-        #gptSelectButtonContainer > label:hover > div {
-            transition: .1s linear;
-            background-color: #fff5;
-        }
-        #gptSelectButtonContainer > label > input:checked + div {
-            transition: .1s linear;
-            background-color: #ffffff;
-        }
-
-        /* GPTSelectButton > Icon */
-        #gptSelectButtonContainer > label > div > i{
-            transition: .1s linear;
-            color: #999;
-            font-size: medium;
-        }
-        #gptSelectButtonContainer > label > input:checked + div > i {
-            transition: .1s linear;
-            color: #31e74c;
-        }
-        
-        #gptSelectButtonContainer > label > div > P {
-            font-size: small;
-        }
-        
-        #CatGPT {
-         width: 100%;
-         text-align: center;
-         font-size: 2.5em;
-         font-weight: bolder;
-         color: #dcdddd;
-
-         z-index: 5;
-        }
-        
-        #questionInput {
-            /* Remove default css */
-            outline: none;
-
-            border: #ccca 1px solid;
-            box-shadow: #8882 0 0 15px;
-
-            margin: auto;
-            margin-bottom: 4%;
-            width: 70%;
-            height: 6%;
-
-            padding: 2%;
-            border-radius: 10px;
-            
-            color: #666;
-            font-weight:normal;
-            font-size: 1em;
-
-            justify-content: center;
-        }
-        #questionInput:focus {
-            box-shadow: #0002 0 0 20px;
-        }
-        
-        /* meta */
-        button {
-            background-color: #0000;
-            border: #888 1px solid;
-            border-radius: 6px;
-
-            height: 5.5%;
-            color: white;
-
-            padding: 5.2%;            
-        }
-        i {
-            margin-right: 6%;
-        }
-        
-        /* MOBILE SCREEN */
-        @media(max-width: 600px) {
-            #sidePage {
-                margin-left: -300px;
-                width: 300px;
-            }
-        }
-        
-    </style>
+    <!-- TITLE -->
+    <title>C atGPT</title>
+    <link rel="icon" href="./favicon.png">
 </head>
+
 <body>
-    <script type="text/javascript">
-        // @ts-check
-
-        window.onload = main;
-        function main(){
-
-            addLog('Why do cats hate dogs?', 'Yesterday');
-            addLog('한글 테스트', 'Yesterday')
-            addLog('Long texts should be hidden by the dissolve effect.')
-            addLog('Why cats are cute?');
-            addLog('Nyan Nyan Nyan Nyan Nyan Nyan Nyan ')
-            
-            let selected = document.getElementsByClassName('log')[0];
-            selected.classList.add('selected');
-        }
-
-        /**
-         * create and add log element after {where}. return Success or failure
-         * @param {String} topic - topic text
-         * @param {String} where - id of logDate (destination)
-         * @return {boolean}
-         */
-        function addLog(topic, where="Today"){
-            
-            // Create container
-            let newContainer = makeWithClass('div', 'log');
-
-            // Add a wrapper for text dissolve effect.
-            newContainer.appendChild(
-                makeWithClass('div', 'wrapper')
-                );
-            
-            // Temporary - Add random id
-            newContainer.id = Math.random().toString(36).substr(2, 16);
-
-            // Add a cat icon
-            let icon = makeWithClass('i', 'fas fa-cat');
-            icon.style.color = '#eee';
-            newContainer.appendChild(icon);
-
-            // Add the topic text
-            newContainer.innerHTML += topic;
-
-            // Append to destination
-            let destination = document.getElementById(where);
-            if (destination==null) {
-                console.error(`There's no ${where}!`);
-                return false; }
-            
-            // if no problem
-            destination.after(newContainer);
-            return true;
-        }
-
-        /**
-         * @param {String} className
-         */
-        function makeWithClass(element, className) {
-            let div = document.createElement(element);
-            div.className = className;
-            return div
-        }
-    </script>
-
+    
+    <!-- Scripts -->
+    <script type="text/javascript" src="./components.js"></script>
     <div id="sidePage">
         <div id="newChatButtonContainer">
             <button id="newChatButton">
@@ -349,9 +42,9 @@
     </div>
     <div id="chatPage">
         <div id="initialPage">
-            <div id="gptSelectButtonContainer">
+                        <!-- <div id="gptSelectButtonContainer">
                 <label for="3_5">
-                    <input id='3_5' type="radio" name="GPT">
+                    <input id='3_5' type="radio" name="GPT" checked="true">
                     <div id='gpt3_5ButtonContainer'>
                         <i class="fas fa-bolt"></i>
                         <p>GPT-3.5</p>
@@ -365,7 +58,9 @@
                     </div>
                 </label>
             </div>
-            <div id="CatGPT">CatGPT</div>
+            <div id="CatGPT">CatGPT</div> -->
+            <div id="chatContainer">
+            </div>
             
             <input type="text" id="questionInput" placeholder="Send a message">
         </div>

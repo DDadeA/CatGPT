@@ -1,0 +1,297 @@
+/* Initial Settings */
+html, body {margin: 0; height: 100%; overflow: hidden}
+body {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    
+    /* Text Selection
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; */
+}
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+div {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+div::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+/* Main Structures */
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+#sidePage {
+    background-color: #222325;
+    display: block;
+    margin-left: 0px;
+    width: 300px;
+    min-height: 100%;
+}
+#chatPage {
+    background-color: white;
+    width: 100%;
+    display: block;
+    justify-content: center;
+}
+#initialPage {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+/* inside sidePage */
+#newChatButtonContainer {
+    min-height: 5%;
+    min-width: 100%;
+    
+    display: flex;
+    flex-direction: row;
+    align-content: space-evenly;
+    gap: 0.5em;
+    padding: 0.8em;
+}
+#newChatButton {
+    text-align: left;
+    font-size: 0.9em;
+    width: 75%;
+    height: inherit;
+}
+#closeSidePageButton {
+    background-color: #0000;
+
+    height: inherit;
+    padding: auto;
+}
+
+#logContainer {
+    height: 100%;
+    background-color: #0000;
+    padding: 2%;
+
+    font-size: small;
+}
+.wrapper {
+    position: absolute;
+    height: 2em;
+    width: 265px;
+    align-self: stretch;
+    background-image: linear-gradient(90deg, rgba(0,0,0,0) 70%, #222325);
+    z-index: 1;
+}
+.logDate {
+    color: #888;
+    margin-left: 3%;
+    margin-top: 6%;
+    margin-bottom: 3%;
+}
+.log {
+    z-index: 0;
+    border-radius: 4px;
+    max-height: 4%;
+    padding: 1.0em;
+    margin: 1%;
+
+    color: #eee;
+    font-size: 1.1em;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.log.selected{
+    background-color: #323335;
+}
+.log.selected > .wrapper {
+    background-image: linear-gradient(90deg, rgba(0,0,0,0) 70%, #323335);
+}
+
+.log:hover {
+    background-color: #323335;
+}
+.log:hover > .wrapper {
+    background-image: linear-gradient(90deg, rgba(0,0,0,0) 70%, #323335);
+}
+
+/* Chat */
+
+/** Initial Page **/
+#gptSelectButtonContainer {
+    width: 30%;
+    max-height: 4%;
+    
+    margin: auto;    
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    background-color: #dedede;
+    
+    margin-top: 5%;
+    margin-bottom: 10%;
+    padding: 0.7%;
+}
+#gptSelectButtonContainer > label {
+    width: 49%;
+    min-height: 96%;
+    max-height: 96%;
+    
+    padding: 0;
+    margin: 0;
+
+    background-color: #0000;
+    display: flex;
+    flex-wrap: nowrap;
+}
+#gptSelectButtonContainer > label > input {
+    visibility: collapse; }
+
+#gptSelectButtonContainer > label > div {
+    width: 100%;
+    border-radius: 10px;
+
+    display: flex;
+    
+    align-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 0;
+    justify-content: center;
+
+    transition: .1s linear;
+    background-color: #0000;
+}
+#gptSelectButtonContainer > label:hover > div {
+    transition: .1s linear;
+    background-color: #fff5;
+}
+#gptSelectButtonContainer > label > input:checked + div {
+    transition: .1s linear;
+    background-color: #ffffff;
+}
+
+/* GPTSelectButton > Icon */
+#gptSelectButtonContainer > label > div > i{
+    transition: .1s linear;
+    color: #999;
+    font-size: medium;
+}
+#gptSelectButtonContainer > label > input:checked + div > i {
+    transition: .1s linear;
+    color: #31e74c;
+}
+
+#gptSelectButtonContainer > label > div > P {
+    font-size: small;
+}
+
+#CatGPT {
+    width: 100%;
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: bolder;
+    color: #dcdddd;
+
+    z-index: 5;
+}
+
+#chatContainer {
+    width: 100%;
+    height: 90%;
+    max-height: 90%;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: scroll;
+}
+
+.chat {
+    display: flex;
+    align-items: start;
+
+    padding: 10%;
+    padding-top: 5%;
+    padding-bottom: 6%;
+    
+    gap: 1.2em;
+
+
+    color: #333;
+    border-bottom: #ccca 1px solid;
+
+    img {
+        width: 35;
+        height: 35;
+
+        align-self: self-start;
+    }
+
+    p {
+        align-self: self-start;
+        margin-top: 0;
+
+        line-height: 160%;
+    }
+}
+
+#questionInput {
+    /* Remove default css */
+    outline: none;
+
+    border: #ccca 1px solid;
+    box-shadow: #8882 0 0 15px;
+
+    margin: auto;
+    margin-bottom: 2%;
+    width: 50%;
+    height: 6%;
+
+    padding: 1%;
+    border-radius: 12px;
+    
+    color: #666;
+    font-weight:normal;
+    font-size: 1em;
+
+    justify-content: center;
+}
+#questionInput:focus {
+    box-shadow: #0002 0 0 20px;
+}
+
+/* meta */
+button {
+    background-color: #0000;
+    border: #888 1px solid;
+    border-radius: 6px;
+
+    height: 5.5%;
+    color: white;
+
+    padding: 5.2%;            
+}
+i {
+    margin-right: 6%;
+}
+
+/* MOBILE SCREEN */
+@media(max-width: 600px) {
+    #sidePage {
+        margin-left: -300px;
+        width: 300px;
+    }
+}
