@@ -4,13 +4,13 @@ body {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
     
-    /* Text Selection
+    /* Text Selection */
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none; */
+    user-select: none;
 }
 body::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
@@ -291,6 +291,29 @@ i {
     margin-right: 6%;
 }
 
+
+span {
+    display: inline-block;
+    animation: wave_text 1s ease-in-out infinite;
+    padding-right: 0.5em;
+  }
+
+span.d0{ animation-delay: 0.0s; }
+span.d1{ animation-delay: 0.2s; }
+span.d2{ animation-delay: 0.4s; }
+
+@keyframes wave_text{
+    00%{
+      transform: translateY(0em);
+    }
+    60%{
+      transform: translateY(-0.5em);
+    }
+    100%{
+      transform: translateY(0em);
+    }
+  }
+  
 @keyframes slowAppear{
     from {
         transform: translateY(-10%);
