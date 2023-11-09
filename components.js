@@ -31,7 +31,14 @@ function main(){
             userInputNode.value = '';
             
             addChat(question, yourProfile);
-            addChat(getMrCatsAnswer(question), gptProfile);
+            let answerElement = addChat('<span class="d0">.</span><span class="d1">.</span><span class="d2">.</span>', gptProfile);
+
+            setTimeout((a)=>{
+                a.innerText = getMrCatsAnswer(question);
+                answerElement.style.animation = 'wave_text 0s ease-in-out infinite'
+            },
+            Math.random()*4000, answerElement);
+            
 
         }
     });
@@ -108,6 +115,8 @@ function addChat(text, profile, destination='chatContainer'){
 
     chatContainer = document.getElementById('chatContainer');
     chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    return chat;
 }
 
 
