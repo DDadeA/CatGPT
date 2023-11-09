@@ -17,8 +17,24 @@ function main(){
     selected.classList.add('selected');
 
 
-    addChat('Why cats are cute?', yourProfile);
-    addChat('Nya nyan. Nyan nya nyan nya nya nyan nya, nyan nyan nya nya.', gptProfile);
+
+    const userInputNode = document.getElementById("questionInput");
+    // @ts-ignore
+    userInputNode.addEventListener("keyup", function(event) {
+        if (event.key === "Enter") {
+
+            document.getElementById('gptSelectButtonContainer').style.visibility = 'collapse';
+            document.getElementById('CatGPT').style.visibility = 'collapse';
+            
+            // @ts-ignore
+            let question = userInputNode.value; // @ts-ignore
+            userInputNode.value = '';
+            
+            addChat(question, yourProfile);
+            addChat(getMrCatsAnswer(question), gptProfile);
+
+        }
+    });
 }
 
 
@@ -47,6 +63,32 @@ class answerer extends profile{
 
 /**
  * 
+ * @param {String} question
+ */
+function getMrCatsAnswer(question){
+    let answer = 'Nyan ';
+    let capital = false;
+    while(0.9 > Math.random()) {
+        if(capital) answer+= 'Nya'
+        else answer+= 'nya'
+
+        if(0.5 > Math.random()) answer+= 'n'
+        
+        capital = true;
+        if(0.1 > Math.random()) answer+= '.'; 
+        else if(0.05 > Math.random()) answer+= '?'
+        else if(0.05 > Math.random()) answer+= '!'
+        else if(0.05 > Math.random()) answer+= '...'
+        else capital = false;
+        
+        answer+= ' '
+    }
+
+    return answer;
+}
+
+/**
+ * 
  * @param {String} text 
  * @param {profile} profile
  */
@@ -63,6 +105,9 @@ function addChat(text, profile, destination='chatContainer'){
     
     // Append to container
     document.getElementById(destination).appendChild(chatDiv);
+
+    chatContainer = document.getElementById('chatContainer');
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
 

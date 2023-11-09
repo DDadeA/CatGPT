@@ -1,5 +1,5 @@
 /* Initial Settings */
-html, body {margin: 0; height: 100%; overflow: hidden}
+html, body {margin: 0; height: 100%; overflow: hidden;}
 body {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -216,6 +216,7 @@ body {
     display: flex;
     flex-direction: column;
 
+    scroll-behavior: smooth;
     overflow-y: scroll;
 }
 
@@ -232,6 +233,8 @@ body {
 
     color: #333;
     border-bottom: #ccca 1px solid;
+
+    animation: slowAppear 0.2s linear 1;
 
     img {
         width: 35;
@@ -286,6 +289,17 @@ button {
 }
 i {
     margin-right: 6%;
+}
+
+@keyframes slowAppear{
+    from {
+        transform: translateY(-10%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 /* MOBILE SCREEN */
